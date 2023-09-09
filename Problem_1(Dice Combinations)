@@ -1,0 +1,68 @@
+Problem link :: https://cses.fi/problemset/task/1633
+Solution
+/* 1-> Using Top-down Dp [TC , SC] = [(O(n)  O(n)+O(n)] extra O(n) because of recursive stack*/
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define pair pair<ll , ll>
+#define ff first
+#define ss second
+#define test  \
+    ll t;     \
+    cin >> t; \
+    for(int i = 1 ; i <= t ; i++)
+vector<int>v = {1 , 2 , 3 , 4 , 5 ,6} ;
+int mod = 1000000007 ;
+int fun(int n , vector<int>&dp){
+    if(n == 0)return 1 ;
+    if(dp[n] != -1)return  dp[n] ;
+    int a = 0 ;
+    for(int i = 0 ; i < 6 ; i++){
+        if(n >= v[i])a = (a + fun(n - v[i] , dp))%mod ;
+    }
+    return dp[n] = a%mod ;
+}
+void solve(){
+    int n ; 
+    cin>>n ;
+    vector<int>dp(n+1 , -1);
+    cout<<fun(n , dp)<<endl;
+}
+int main()
+{
+    solve() ;
+    return 0 ;
+}
+
+
+/* 2-> Using Bottom-up Dp [TC , SC] = [(O(n)  O(n)] Here we reduse recursion stack space*/
+
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define pair pair<ll , ll>
+#define ff first
+#define ss second
+#define test  \
+    ll t;     \
+    cin >> t; \
+    for(int i = 1 ; i <= t ; i++)
+vector<int>v = {1 , 2 , 3 , 4 , 5 ,6} ;
+int mod = 1000000007 ;
+void solve(){
+    int n ; 
+    cin>>n ;
+    vector<int>dp(n+1 , 0);
+    dp[0] = 1;
+    for(int i = 1 ; i <= n ; i++){
+        for(int j = 0 ; j < 6 ; j++){
+        if(i >= v[j])dp[i] = (dp[i] + dp[i - v[j]])%mod ;
+        }
+    }
+    cout<<dp[n]<<endl;
+}
+int main()
+{
+    solve() ;
+    return 0 ;
+}
